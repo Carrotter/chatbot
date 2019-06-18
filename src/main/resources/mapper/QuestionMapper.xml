@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.chatbot.dao.QuestionMapper" >
+  <resultMap id="BaseResultMap" type="com.example.chatbot.domain.Question" >
+    <id column="ques_id" property="quesId" jdbcType="INTEGER" />
+    <result column="question" property="question" jdbcType="VARCHAR" />
+    <result column="keys" property="keys" jdbcType="VARCHAR" />
+    <result column="answer" property="answer" jdbcType="VARCHAR" />
+    <result column="o1" property="o1" jdbcType="VARCHAR" />
+    <result column="o2" property="o2" jdbcType="VARCHAR" />
+    <result column="o3" property="o3" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ques_id, question, keys, answer, o1, o2, o3
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.example.chatbot.domain.QuestionExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from question
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from question
+    where ques_id = #{quesId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from question
+    where ques_id = #{quesId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.example.chatbot.domain.QuestionExample" >
+    delete from question
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.example.chatbot.domain.Question" >
+    insert into question (ques_id, question, keys, 
+      answer, o1, o2, o3
+      )
+    values (#{quesId,jdbcType=INTEGER}, #{question,jdbcType=VARCHAR}, #{keys,jdbcType=VARCHAR}, 
+      #{answer,jdbcType=VARCHAR}, #{o1,jdbcType=VARCHAR}, #{o2,jdbcType=VARCHAR}, #{o3,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.chatbot.domain.Question" >
+    insert into question
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="quesId != null" >
+        ques_id,
+      </if>
+      <if test="question != null" >
+        question,
+      </if>
+      <if test="keys != null" >
+        keys,
+      </if>
+      <if test="answer != null" >
+        answer,
+      </if>
+      <if test="o1 != null" >
+        o1,
+      </if>
+      <if test="o2 != null" >
+        o2,
+      </if>
+      <if test="o3 != null" >
+        o3,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="quesId != null" >
+        #{quesId,jdbcType=INTEGER},
+      </if>
+      <if test="question != null" >
+        #{question,jdbcType=VARCHAR},
+      </if>
+      <if test="keys != null" >
+        #{keys,jdbcType=VARCHAR},
+      </if>
+      <if test="answer != null" >
+        #{answer,jdbcType=VARCHAR},
+      </if>
+      <if test="o1 != null" >
+        #{o1,jdbcType=VARCHAR},
+      </if>
+      <if test="o2 != null" >
+        #{o2,jdbcType=VARCHAR},
+      </if>
+      <if test="o3 != null" >
+        #{o3,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.example.chatbot.domain.QuestionExample" resultType="java.lang.Integer" >
+    select count(*) from question
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update question
+    <set >
+      <if test="record.quesId != null" >
+        ques_id = #{record.quesId,jdbcType=INTEGER},
+      </if>
+      <if test="record.question != null" >
+        question = #{record.question,jdbcType=VARCHAR},
+      </if>
+      <if test="record.keys != null" >
+        keys = #{record.keys,jdbcType=VARCHAR},
+      </if>
+      <if test="record.answer != null" >
+        answer = #{record.answer,jdbcType=VARCHAR},
+      </if>
+      <if test="record.o1 != null" >
+        o1 = #{record.o1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.o2 != null" >
+        o2 = #{record.o2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.o3 != null" >
+        o3 = #{record.o3,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update question
+    set ques_id = #{record.quesId,jdbcType=INTEGER},
+      question = #{record.question,jdbcType=VARCHAR},
+      keys = #{record.keys,jdbcType=VARCHAR},
+      answer = #{record.answer,jdbcType=VARCHAR},
+      o1 = #{record.o1,jdbcType=VARCHAR},
+      o2 = #{record.o2,jdbcType=VARCHAR},
+      o3 = #{record.o3,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.chatbot.domain.Question" >
+    update question
+    <set >
+      <if test="question != null" >
+        question = #{question,jdbcType=VARCHAR},
+      </if>
+      <if test="keys != null" >
+        keys = #{keys,jdbcType=VARCHAR},
+      </if>
+      <if test="answer != null" >
+        answer = #{answer,jdbcType=VARCHAR},
+      </if>
+      <if test="o1 != null" >
+        o1 = #{o1,jdbcType=VARCHAR},
+      </if>
+      <if test="o2 != null" >
+        o2 = #{o2,jdbcType=VARCHAR},
+      </if>
+      <if test="o3 != null" >
+        o3 = #{o3,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ques_id = #{quesId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.chatbot.domain.Question" >
+    update question
+    set question = #{question,jdbcType=VARCHAR},
+      keys = #{keys,jdbcType=VARCHAR},
+      answer = #{answer,jdbcType=VARCHAR},
+      o1 = #{o1,jdbcType=VARCHAR},
+      o2 = #{o2,jdbcType=VARCHAR},
+      o3 = #{o3,jdbcType=VARCHAR}
+    where ques_id = #{quesId,jdbcType=INTEGER}
+  </update>
+</mapper>
