@@ -77,9 +77,9 @@ public class MyController {
         if (result.size()==0){
             yunke = qingYunKe.send("free","0",key);
             logger.info("青云客接口："+ yunke);
-            return yunke;
+            return Result.yunke(yunke);
         }
-        return Result.success(result);
+        return Result.sql(result);
     }
 
     //插入新问题

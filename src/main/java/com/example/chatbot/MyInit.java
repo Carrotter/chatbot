@@ -33,6 +33,8 @@ public class MyInit implements ApplicationRunner {
         CustomDictionary.add("双专业");
         CustomDictionary.add("中外");
         CustomDictionary.add("标准");
+        CustomDictionary.add("兔子");
+        CustomDictionary.add("萝卜");
         logger.info("词典初始化完成！");
     }
 }

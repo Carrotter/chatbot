@@ -37,6 +37,8 @@ public class MyService {
         add("双专业");
         add("中外");
         add("标准");
+        add("兔子");
+        add("萝卜");
     }};
 
     /**

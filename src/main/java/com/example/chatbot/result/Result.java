@@ -17,6 +17,12 @@ public class Result<T> {
         this.data = data;
     }
 
+    private Result(T data, int code) {
+        this.code = code;
+        this.msg = "success";
+        this.data = data;
+    }
+
     public Result(CodeMsg cm) {
         if (cm == null){
             return;
@@ -33,6 +39,14 @@ public class Result<T> {
 
     public static <T> Result<T> success(T data){
         return new Result<T>(data);
+    }
+
+    public static <T> Result<T> sql(T data){
+        return new Result<T>(data,0);
+    }
+
+    public static <T> Result<T> yunke(T data){
+        return new Result<T>(data,1);
     }
 
     public static <T> Result<T> error(CodeMsg cm){
