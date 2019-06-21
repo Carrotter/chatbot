@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -15,7 +16,7 @@ import java.util.List;
 @Service
 public class MyService {
 
-    @Autowired
+    @Resource
     QuestionMapper mapper;
 
     private static Logger logger = LoggerFactory.getLogger(MyService.class);
@@ -39,6 +40,8 @@ public class MyService {
         add("标准");
         add("兔子");
         add("萝卜");
+        add("深度学习");
+        add("考研");
     }};
 
     /**
@@ -69,7 +72,13 @@ public class MyService {
      * 根据关键词查询相关问题
      */
     public List<Question> selectLike(String key) {
-        return mapper.selectLike(key);
+        List<Question> list = mapper.selectLike(key);
+        if (list.size() != 0) {
+            for (Question q: list) {
+                mapper.updateNum(q.getQuesId().toString());
+            }
+        }
+        return list;
     }
 
     public int insertQuestion(String question, String answer){

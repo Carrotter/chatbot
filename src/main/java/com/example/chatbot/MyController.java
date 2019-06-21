@@ -1,7 +1,10 @@
 package com.example.chatbot;
 
 import com.example.chatbot.domain.Question;
+import com.example.chatbot.domain.hotQuestion;
 import com.example.chatbot.result.Result;
+import com.example.chatbot.result.ResultTab;
+import com.example.chatbot.service.serviceImpl.RobotManagerImpl;
 import com.hankcs.hanlp.HanLP;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +23,8 @@ public class MyController {
 
     @Autowired
     MyService service;
+    @Autowired
+    RobotManagerImpl managerService;
 
     @Autowired
     QingYunKe qingYunKe;
@@ -63,6 +68,11 @@ public class MyController {
         找相关问题
         */
         logger.info("用户输入："+key);
+        List<Question> questions = service.selectLike(key);
+        System.out.println(questions);
+        if (questions.size() !=0) {
+            return new ResultTab(0, "success", "0", questions);
+        }
         List<String> keys = service.keyword(key);
         keys = service.chooseMyKeys(keys);
         List<Question> result = new ArrayList<>();
@@ -75,6 +85,14 @@ public class MyController {
         //如果数据库没有相关问题，则访问青云客API
         String yunke;
         if (result.size()==0){
+            List<hotQuestion> outQuestions = managerService.selectOutHotQuestion(key);
+            if (outQuestions.size() == 0) {
+                managerService.insertOutHotQuestion(key);
+            } else {
+                for (hotQuestion q: outQuestions) {
+                    managerService.updateOutHotQuestion(q.getId().toString());
+                }
+            }
             yunke = qingYunKe.send("free","0",key);
             logger.info("青云客接口："+ yunke);
             return Result.yunke(yunke);

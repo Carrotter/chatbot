@@ -35,6 +35,8 @@ public class MyInit implements ApplicationRunner {
         CustomDictionary.add("标准");
         CustomDictionary.add("兔子");
         CustomDictionary.add("萝卜");
+        CustomDictionary.add("深度学习");
+        CustomDictionary.add("考研");
         logger.info("词典初始化完成！");
     }
 }
