@@ -3,7 +3,6 @@ package com.example.chatbot;
 import com.example.chatbot.domain.Question;
 import com.example.chatbot.domain.hotQuestion;
 import com.example.chatbot.result.Result;
-import com.example.chatbot.result.ResultTab;
 import com.example.chatbot.service.serviceImpl.RobotManagerImpl;
 import com.hankcs.hanlp.HanLP;
 import org.slf4j.Logger;
@@ -71,7 +70,7 @@ public class MyController {
         List<Question> questions = service.selectLike(key);
         System.out.println(questions);
         if (questions.size() !=0) {
-            return new ResultTab(0, "success", "0", questions);
+            return Result.sql(questions);
         }
         List<String> keys = service.keyword(key);
         keys = service.chooseMyKeys(keys);

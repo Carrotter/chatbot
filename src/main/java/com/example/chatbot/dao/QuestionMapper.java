@@ -32,7 +32,7 @@ public interface QuestionMapper {
 
     int updateByPrimaryKey(Question record);
 
-    @Select("SELECT * FROM question WHERE question LIKE '%${key}%'")
+    @Select("SELECT * FROM question WHERE question LIKE '%${key}%' limit 3")
     List<Question> selectLike(@Param("key") String key);
 
     @Insert("INSERT INTO question(question,answer) VALUES(#{q},#{a})")
@@ -47,7 +47,7 @@ public interface QuestionMapper {
     @Update("UPDATE question set o1 = ifnull(o1,0) + 1 where ques_id = #{id}")
     int updateNum(@Param("id") String id);
 
-    @Select("SELECT * from question order by o1 desc limit 10")
+    @Select("SELECT * from question order by CAST(o1 as SIGNED) desc limit 10")
     List<Question> selectHotQuestion();
 
     //未录入热点问题处理
